@@ -1,0 +1,45 @@
+[build-system]
+requires = ["poetry-core>=1.7.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "qvd4nifi"
+version = "0.1.0"
+description = "NiFi processors for reading and writing QVD files."
+readme = "README.md"
+license = "MIT"
+authors = ["Constantin Müller <info@mueller-constantin.de>"]
+keywords = ["qlik", "qvd", "qlik sense", "qlik view", "nifi", "apache nifi", "data processing", "data integration"]
+
+homepage = "https://github.com/MuellerConstantin/qvd4nifi"
+repository = "https://github.com/MuellerConstantin/qvd4nifi"
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+PyQvd = "^2.3.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1"
+pylint = "^3.1"
+nox = "^2025.11.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.pylint.main]
+py-version = "3.10"
+
+[tool.pylint.messages_control]
+max-line-length = 120
+
+[tool.pylint.report]
+output-format = "colorized"
