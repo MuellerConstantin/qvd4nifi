@@ -1,3 +1,7 @@
+"""
+This module defines a minimal dummy processor for testing purposes.
+"""
+
 from nifiapi.flowfiletransform import FlowFileTransform, FlowFileTransformResult
 
 class DummyProcessor(FlowFileTransform):
@@ -18,9 +22,11 @@ class DummyProcessor(FlowFileTransform):
         description = "Minimal dummy processor for testing purposes."
 
     def __init__(self, **kwargs):
-        pass
+        """
+        Initialize the processor with any necessary configuration.
+        """
 
-    def transform(self, context, flowfile):
+    def transform(self, context, flowFile):
         """
         This method is called for each flow file that the processor receives.
         It transforms the content of the flow file to a static string.
