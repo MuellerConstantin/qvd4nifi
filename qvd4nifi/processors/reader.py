@@ -8,7 +8,7 @@ from nifiapi.flowfiletransform import FlowFileTransform, FlowFileTransformResult
 
 class ReadQvd(FlowFileTransform):
     """
-    A minimal processor that reads the content of a QVD file.
+    A minimal processor that reads the content of a QVD file and converts it to NDJSON format.
     """
     class Java:
         """
@@ -21,7 +21,7 @@ class ReadQvd(FlowFileTransform):
         This inner class is used to provide metadata about the processor.
         """
         version = "0.1.0"
-        description = "Reads the content of a QVD file"
+        description = "Reads the content of a QVD file and converts it to NDJSON format."
         tags = ["qvd", "qlik", "json", "convert", "qlikview", "qliksense"]
         dependencies = ["PyQvd==2.3.0"]
 
@@ -39,7 +39,6 @@ class ReadQvd(FlowFileTransform):
         from pyqvd import QvdTable
 
         stream = io.BytesIO(flowFile.getContentsAsBytes())
-        table = QvdTable.from_stream(stream)
 
         def convert_value(value):
             if hasattr(value, "display_value"):
@@ -47,20 +46,29 @@ class ReadQvd(FlowFileTransform):
             return value
 
         lines = []
+        record_count = 0
+        column_count = 0
 
-        for row in table.data:
-            record = {
-                col: convert_value(val)
-                for col, val in zip(table.columns, row)
-            }
-            lines.append(json.dumps(record))
+        tables = QvdTable.from_stream(stream, chunk_size=10000)
+
+        for table in tables:
+            column_count = len(table.columns)
+
+            for row in table.data:
+                record = {
+                    col: convert_value(val)
+                    for col, val in zip(table.columns, row)
+                }
+
+                lines.append(json.dumps(record))
+                record_count += 1
 
         ndjson = "\n".join(lines)
 
         attributes = {
             "mime.type": "application/x-ndjson",
-            "qvd.record.count": str(len(table.data)),
-            "qvd.columns.count": str(len(table.columns))
+            "qvd.record.count": str(record_count),
+            "qvd.columns.count": str(column_count)
         }
 
         return FlowFileTransformResult(
