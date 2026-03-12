@@ -45,9 +45,10 @@ class ReadQvd(FlowFileTransform):
                 return value.display_value
             return value
 
-        lines = []
+        output = io.StringIO()
         record_count = 0
         column_count = 0
+        first_line = True
 
         tables = QvdTable.from_stream(stream, chunk_size=10000)
 
@@ -60,10 +61,15 @@ class ReadQvd(FlowFileTransform):
                     for col, val in zip(table.columns, row)
                 }
 
-                lines.append(json.dumps(record))
+                if not first_line:
+                    output.write("\n")
+
+                output.write(json.dumps(record))
+
+                first_line = False
                 record_count += 1
 
-        ndjson = "\n".join(lines)
+        ndjson = output.getvalue()
 
         attributes = {
             "mime.type": "application/x-ndjson",
