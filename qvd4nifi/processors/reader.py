@@ -23,7 +23,7 @@ class ReadQvd(FlowFileTransform):
         version = "0.1.0"
         description = "Reads the content of a QVD file and converts it to NDJSON format."
         tags = ["qvd", "qlik", "json", "convert", "qlikview", "qliksense"]
-        dependencies = ["PyQvd==2.3.0"]
+        dependencies = ["PyQvd==2.3.1"]
 
     def __init__(self, **kwargs):
         """
