@@ -26,3 +26,10 @@ def build(session):
     Build package.
     """
     session.run("poetry", "build", external=True)
+
+@nox.session
+def nar(session):
+    """
+    Build NAR package.
+    """
+    session.run("python", "scripts/build_nar.py", external=True)
