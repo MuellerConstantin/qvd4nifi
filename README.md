@@ -5,6 +5,7 @@
 ---
 
 - [Introduction](#introduction)
+- [Usage](#usage)
 - [License](#license)
   - [Forbidden](#forbidden)
 
@@ -12,7 +13,13 @@
 
 ## Introduction
 
-The _qvd4nifi_ library provides a set of Apache NiFi processors for reading and writing QVD files, which are a proprietary file format used by QlikView and Qlik Sense to store data. The library allows users to easily integrate QVD file processing into their NiFi data flows, enabling seamless data integration and transformation. With _qvd4nifi_, users can read data from QVD files, perform transformations, and write the results back to QVD files, all within the NiFi ecosystem.
+The _qvd4nifi_ library provides a set of Apache NiFi processors for reading and writing QVD files, which are a proprietary file format used by QlikView and Qlik Sense to store data. The library allows users to easily integrate QVD file processing into their NiFi data flows, enabling seamless data integration and transformation. With _qvd4nifi_, users can read data from QVD files, perform transformations, and write the results back to QVD files, all within the NiFi ecosystem. Internally, the library utilizes the [PyQvd](https://github.com/MuellerConstantin/PyQvd) library for QVD file operations.
+
+## Usage
+
+With every release, a new artifact, a NAR (NiFi Archive) file, is published to the [GitHub Releases](https://github.com/MuellerConstantin/qvd4nifi/releases) page of this repository. To use the library, simply download the latest NAR file and place it in the `lib` directory of your NiFi installation. After restarting NiFi, the new processors will be available for use in your data flows. Detailed documentation on how to use the processors can be found in the [NiFi User Guide](https://nifi.apache.org/docs/nifi-docs/html/user-guide.html) and the processor-specific documentation provided in the GitHub repository.
+
+The NAR artifact is delivered as a standalone package, which means that all dependencies are included within the NAR file. This allows for easy deployment and ensures that there are no conflicts with other NiFi processors or libraries.
 
 ## License
 
