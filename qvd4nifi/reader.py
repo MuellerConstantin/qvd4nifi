@@ -20,7 +20,7 @@ class ReadQvd(FlowFileTransform):
         """
         This inner class is used to provide metadata about the processor.
         """
-        version = "0.1.0"
+        version = "0.1.0-dev.1"
         description = "Reads the content of a QVD file and converts it to NDJSON format."
         tags = ["qvd", "qlik", "json", "convert", "qlikview", "qliksense"]
         dependencies = ["PyQvd==2.3.1"]

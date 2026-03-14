@@ -20,7 +20,7 @@ class WriteQvd(FlowFileTransform):
         """
         This inner class is used to provide metadata about the processor.
         """
-        version = "0.1.0"
+        version = "0.1.0-dev.1"
         description = "Converts NDJSON input into a QVD file."
         tags = ["qvd", "qlik", "json", "convert", "qlikview", "qliksense"]
         dependencies = ["PyQvd==2.3.1"]
