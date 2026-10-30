@@ -13,8 +13,10 @@ services:
     volumes:
       # Custom NARs are picked up from the autoload directory.
       - ./dist:/opt/nifi/nifi-current/nar_extensions:ro
-      # Exchange directory for GetFile/PutFile, e.g. QVD and NDJSON test files.
-      - ./scratchpad:/data
+      # Sample QVD files, read-only input for GetFile.
+      - ./data:/data:ro
+      # Output directory for PutFile, git-ignored.
+      - ./scratchpad:/scratchpad
       - nifi-conf:/opt/nifi/nifi-current/conf
       - nifi-state:/opt/nifi/nifi-current/state
       - nifi-database:/opt/nifi/nifi-current/database_repository

@@ -41,7 +41,8 @@ exceptions.
 ├── scripts/
 │   └── build_nar.py          # Builds the NAR into dist/
 ├── tests/
-├── scratchpad/               # Git-ignored exchange directory, mounted as /data in the container
+├── data/                     # Sample QVD files (small, medium, large), mounted read-only as /data in the container
+├── scratchpad/               # Git-ignored output directory, mounted as /scratchpad in the container
 ├── compose.yaml              # Local NiFi with the built NAR mounted
 ├── noxfile.py
 ├── pyproject.toml
