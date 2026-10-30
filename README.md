@@ -31,7 +31,7 @@ python scripts/build_nar.py
 docker compose up -d
 ```
 
-NiFi is then available at <https://localhost:8443/nifi> (self-signed certificate) after about a minute. The login is `admin` with the password set in `compose.yaml`. The built NAR is mounted from `dist/`, `data/` (sample QVD files) is mounted read-only at `/data` and the git-ignored `scratchpad/` at `/scratchpad` in the container, for use with `GetFile` and `PutFile`. After rebuilding the NAR, apply it with `docker compose restart nifi`. `docker compose down -v` also removes the flow and all NiFi state.
+NiFi is then available at <https://localhost:8443/nifi> (self-signed certificate) after about a minute. The login is `admin` with the password set in `compose.yaml`. The built NAR is mounted from `dist/`, `data/` (sample QVD files) is mounted read-only at `/data` and the git-ignored `scratchpad/` at `/scratchpad` in the container, for use with `GetFile` and `PutFile`. After rebuilding the NAR, apply it with `docker compose restart nifi`. Every flow definition in `flows/` is imported as a stopped process group named like the file when the container starts (existing groups are skipped), e.g. `roundtrip-small`, which reads `data/small.qvd`, converts it to NDJSON and back and writes the result to `scratchpad/`. `docker compose down -v` also removes the flow and all NiFi state.
 
 ## License
 

@@ -39,9 +39,11 @@ exceptions.
 │   ├── reader.py             # ReadQvd processor
 │   └── writer.py             # WriteQvd processor
 ├── scripts/
-│   └── build_nar.py          # Builds the NAR into dist/
+│   ├── build_nar.py          # Builds the NAR into dist/
+│   └── seed_flows.py         # Imports flows/ into the local NiFi
 ├── tests/
 ├── data/                     # Sample QVD files (small, medium, large), mounted read-only as /data in the container
+├── flows/                    # NiFi flow definitions, imported as process groups by the seed service
 ├── scratchpad/               # Git-ignored output directory, mounted as /scratchpad in the container
 ├── compose.yaml              # Local NiFi with the built NAR mounted
 ├── noxfile.py
@@ -59,7 +61,7 @@ Tasks run through Nox inside the Poetry environment:
 
 To try the processors in a real NiFi, build the NAR and run `docker compose up -d` (UI at
 `https://localhost:8443/nifi`, credentials in `compose.yaml`). After rebuilding the NAR apply
-it with `docker compose restart nifi`.
+it with `docker compose restart nifi`. Every `flows/<name>.json` flow definition is imported as stopped process group `<name>` on `docker compose up` (existing groups are skipped); export changed flows via _Download flow definition_ and overwrite the file.
 
 A change is only done when `tests` and `lint` pass without findings. Changes to processor
 behavior should additionally be checked in the local NiFi.
