@@ -6,6 +6,7 @@
 
 - [Introduction](#introduction)
 - [Usage](#usage)
+- [Development](#development)
 - [License](#license)
   - [Forbidden](#forbidden)
 
@@ -20,6 +21,17 @@ The _qvd4nifi_ library provides a set of Apache NiFi processors for reading and 
 With every release, a new artifact, a NAR (NiFi Archive) file, is published to the [GitHub Releases](https://github.com/MuellerConstantin/qvd4nifi/releases) page of this repository. To use the library, simply download the latest NAR file and place it in the `lib` directory of your NiFi installation. After restarting NiFi, the new processors will be available for use in your data flows. Detailed documentation on how to use the processors can be found in the [NiFi User Guide](https://nifi.apache.org/docs/nifi-docs/html/user-guide.html) and the processor-specific documentation provided in the GitHub repository.
 
 The NAR artifact is delivered as a standalone package, which means that all dependencies are included within the NAR file. This allows for easy deployment and ensures that there are no conflicts with other NiFi processors or libraries.
+
+## Development
+
+A `compose.yaml` is included to try the processors in a local NiFi without installing it. Build the NAR first, then start the container:
+
+```bash
+python scripts/build_nar.py
+docker compose up -d
+```
+
+NiFi is then available at <https://localhost:8443/nifi> (self-signed certificate) after about a minute. The login is `admin` with the password set in `compose.yaml`. The built NAR is mounted from `dist/`, and `scratchpad/` is mounted at `/data` in the container for use as data exchange folder. After rebuilding the NAR, apply it with `docker compose restart nifi`. `docker compose down -v` also removes the flow and all NiFi state.
 
 ## License
 
